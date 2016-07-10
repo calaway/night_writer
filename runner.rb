@@ -1,4 +1,5 @@
 require './lib/plaintext'
 
 
-plaintext_message_1 = Plaintext.new("message_1")
+plaintext_message_1 = Plaintext.new("helloworld")
+puts plaintext_message_1.translate_plaintext_to_braille

@@ -33,7 +33,7 @@ class NightWriterTest < Minitest::Test
     assert_equal "0.0.0.0.0.", nightwriter1.braille_string("",plaintext_1)
   end
 
-  def test_it_can_translate_other_rows
+  def test_it_can_translate_single_rows
     nightwriter1 = NightWriter.new
 
     plaintext_1 = "hello"
@@ -42,7 +42,22 @@ class NightWriterTest < Minitest::Test
     assert_equal "00.00.0..0", nightwriter1.braille_string(plaintext_1,1)
     plaintext_1 = "hello"
     assert_equal "....0.0.0.", nightwriter1.braille_string(plaintext_1,2)
+    plaintext_1 = "hello "
+    assert_equal "0.0.0.0.0...", nightwriter1.braille_string(plaintext_1,0)
+    plaintext_1 = "hello, world!"
+    assert_equal "0.0.0.0.0......00.0.0.00..", nightwriter1.braille_string(plaintext_1,0)
   end
 
-  
+  def test_it_can_translate_all_three_rows
+    nightwriter1 = NightWriter.new
+    plaintext_1 = "hello"
+    assert_equal ["0.0.0.0.0.", "00.00.0..0", "....0.0.0."], nightwriter1.three_row_translation(plaintext_1)
+    plaintext_1 = "hello, world!"
+    assert_equal ["0.0.0.0.0......00.0.0.00..",
+                  "00.00.0..00...00.0000..000", 
+                  "....0.0.0......00.0.0...0."], nightwriter1.three_row_translation(plaintext_1)
+  end
+
+
+
 end

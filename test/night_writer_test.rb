@@ -46,16 +46,20 @@ class NightWriterTest < Minitest::Test
     assert_equal "0.0.0.0.0...", nightwriter1.braille_string(plaintext_1,0)
     plaintext_1 = "hello, world!"
     assert_equal "0.0.0.0.0......00.0.0.00..", nightwriter1.braille_string(plaintext_1,0)
+    plaintext_1 = " !',-.?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    assert_equal '..............0.0.00000.00000..0.00.0.00000.00000..0.00.0..000000...0...0...00..00..0...00..00..0....0...0..0...0...00..00..0...00..00..0....0...0..0...0....0..00..00..0.' , nightwriter1.braille_string(plaintext_1,0)
   end
 
   def test_it_can_translate_all_three_rows
     nightwriter1 = NightWriter.new
     plaintext_1 = "hello"
     assert_equal ["0.0.0.0.0.", "00.00.0..0", "....0.0.0."], nightwriter1.three_row_translation(plaintext_1)
-    plaintext_1 = "hello, world!"
+    plaintext_2 = "hello, world!"
     assert_equal ["0.0.0.0.0......00.0.0.00..",
                   "00.00.0..00...00.0000..000",
-                  "....0.0.0......00.0.0...0."], nightwriter1.three_row_translation(plaintext_1)
+                  "....0.0.0......00.0.0...0."], nightwriter1.three_row_translation(plaintext_2)
+    plaintext_3 = " !',-.?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    assert_equal ['..............0.0.00000.00000..0.00.0.00000.00000..0.00.0..000000...0...0...00..00..0...00..00..0....0...0..0...0...00..00..0...00..00..0....0...0..0...0....0..00..00..0.','..00..0...000...0....0.00.00000.00..0....0.00.00000.00..0.00...0.0......0........0...0..0...00..00..0...00......0........0...0..0...00..00..0...00......0...00.......0...0','..0.0...00.000....................0.0.0.0.0.0.0.0.0.0.0000.0000000.0...0...0...0...0...0...0...0...0...0...00..00..00..00..00..00..00..00..00..00..000.000.0.0.000.000.000'] , nightwriter1.three_row_translation(plaintext_3)
   end
 
   def test_it_can_line_break_after_80_chars
@@ -72,5 +76,18 @@ class NightWriterTest < Minitest::Test
 '00.000.000'], nightwriter1.add_line_breaks(braille_string)
   end
 
+  def test_it_can_output_with_line_breaks
+    nightwriter1 = NightWriter.new
+    plaintext_message =  " !',-.?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    assert_equal ['..............0.0.00000.00000..0.00.0.00000.00000..0.00.0..000000...0...0...00..',
+'..00..0...000...0....0.00.00000.00..0....0.00.00000.00..0.00...0.0......0.......',
+'..0.0...00.000....................0.0.0.0.0.0.0.0.0.0.0000.0000000.0...0...0...0',
+'00..0...00..00..0....0...0..0...0...00..00..0...00..00..0....0...0..0...0....0..',
+'.0...0..0...00..00..0...00......0........0...0..0...00..00..0...00......0...00..',
+'...0...0...0...0...0...0...00..00..00..00..00..00..00..00..00..00..000.000.0.0.0',
+'00..00..0.',
+'.....0...0',
+'00.000.000'] , nightwriter1.braille_translate_with_line_breaks(plaintext_message)
+  end
 
 end

@@ -8,7 +8,7 @@ nightwriter1 = NightWriter.new
 
 
 
-braille_output = nightwriter1.three_row_translation(plaintext)
+braille_output = nightwriter1.braille_translate_with_line_breaks(plaintext)
 
 
 writer = File.open(ARGV[1], "w")

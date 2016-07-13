@@ -52,4 +52,24 @@ class NightReader
   def translate_to_plaintext_with_caps
     translate_to_plaintext.gsub(/\$[a-z]/) { |s| s[1].upcase }
   end
+
+  def translate_to_plaintext_with_caps_and_numbers
+    plaintext_translation_number_substitution = {"a"=>"1", "b"=>"2", "c"=>"3", "d"=>"4", "e"=>"5", "f"=>"6", "g"=>"7", "h"=>"8", "i"=>"9", "j"=>"0", "k"=>"k", "l"=>"l", "m"=>"m", "n"=>"n", "o"=>"o", "p"=>"p", "q"=>"q", "r"=>"r", "s"=>"s", "t"=>"t", "u"=>"u", "v"=>"v", "w"=>"w", "x"=>"x", "y"=>"y", "z"=>"z", "$"=>"$", "#"=>"#", " "=>" ", "!"=>"!", "'"=>"'", ","=>",", "-"=>"-", "."=>".", "?"=>"?", "A"=>"A", "B"=>"B", "C"=>"C", "D"=>"D", "E"=>"E", "F"=>"F", "G"=>"G", "H"=>"H", "I"=>"I", "J"=>"J", "K"=>"K", "L"=>"L", "M"=>"M", "N"=>"N", "O"=>"O", "P"=>"P", "Q"=>"Q", "R"=>"R", "S"=>"S", "T"=>"T", "U"=>"U", "V"=>"V", "W"=>"W", "X"=>"X", "Y"=>"Y", "Z"=>"Z"}
+    plaintext_translation = translate_to_plaintext_with_caps
+    index = 0
+    length = plaintext_translation.length
+    while index < length
+      if plaintext_translation[index] != "#"
+        index += 1
+      else
+        while plaintext_translation[index] != " " && index < length
+          plaintext_translation[index] = plaintext_translation_number_substitution[plaintext_translation[index]]
+          index +=1
+        end
+      end
+    end
+    plaintext_translation.delete('#').gsub(/[0-9][" "]/) do |match|
+      match = match[0]
+    end
+  end
 end

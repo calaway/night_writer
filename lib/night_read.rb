@@ -8,7 +8,7 @@ nightreader1 = NightReader.new(braille_message)
 
 
 
-plaintext_output = nightreader1.translate_to_plaintext_with_caps
+plaintext_output = nightreader1.translate_to_plaintext_with_caps_and_numbers
 
 
 writer = File.open(ARGV[1], "w")

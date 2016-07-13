@@ -63,4 +63,10 @@ class NightReaderTest < Minitest::Test
     assert_equal " !',-.?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" , braille_message_1.translate_to_plaintext_with_caps
   end
 
+  def test_it_can_translate_numbers
+    message = "0..00.0...0..00.0...0..00000\n...0.........0..0.....0..00.\n..00........00........0....."
+    braille_message_1 = NightReader.new(message)
+    assert_equal "a11a12asdf" , braille_message_1.translate_to_plaintext_with_caps_and_numbers
+  end
+
 end

@@ -1,43 +1,17 @@
-class NightReader
-  attr_reader :braille_string
+require './lib/night_reader'
 
-  def initialize(input_string)
-    @braille_string = input_string
-    @braille_letters = []
-  end
+reader = File.open(ARGV[0], "r")
+braille_message = reader.read
+reader.close
 
-  def string_to_array
-    @braille_string.split("\n")
-  end
+nightreader1 = NightReader.new(braille_message)
 
-  def compress_lines
-    braille_lines = ["", "", ""]
-    string_to_array.each_with_index do |row, index|
-      if index % 3 == 0
-        braille_lines[0] << row
-      elsif index % 3 == 1
-        braille_lines[1] << row
-      else
-        braille_lines[2] << row
-      end
-    end
-    braille_lines
-  end
 
-  def braille_line_to_letters(braille_line)
-    braille_line.chars.each_with_index do |character, index|
-      if @braille_letters[index / 2].nil?
-        @braille_letters[index / 2] = ""
-      end
-      @braille_letters[index / 2] << character
-    end
-    @braille_letters
-  end
 
-  def braille_multi_line_to_letters
-    compress_lines.each do |line|
-      braille_line_to_letters(line)
-    end
-    @braille_letters
-  end
-end
+plaintext_output = nightreader1.translate_to_plaintext_with_caps
+
+
+writer = File.open(ARGV[1], "w")
+writer.write(plaintext_output)
+writer.close
+puts "Created #{ARGV[1]} containing #{plaintext_output.length} characters"

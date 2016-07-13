@@ -1,3 +1,5 @@
+require 'pry'
+
 class NightWriter
 
   attr_reader :rows
@@ -21,4 +23,17 @@ class NightWriter
     braille_string(input, index)
     end
   end
+
+  def add_line_breaks(braille_translation)
+    index = 0
+    while index < braille_translation.length
+      if  braille_translation[index].length > 80
+        braille_translation[index + 3] = braille_translation[index][80..-1]
+        braille_translation[index] = braille_translation[index][0..79]
+      end
+      index += 1
+    end
+    braille_translation
+  end
+
 end

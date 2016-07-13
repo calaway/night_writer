@@ -90,4 +90,16 @@ class NightWriterTest < Minitest::Test
 '00.000.000'] , nightwriter1.braille_translate_with_line_breaks(plaintext_message)
   end
 
+  def test_parse_plaintext_to_add_number_symbol
+    nightwriter1 = NightWriter.new
+    plaintext_message = "a1"
+    assert_equal "a#1" , nightwriter1.parse_plaintext_for_numbers(plaintext_message)
+    nightwriter1 = NightWriter.new
+    plaintext_message = "1a"
+    assert_equal "#1a" , nightwriter1.parse_plaintext_for_numbers(plaintext_message)
+    nightwriter1 = NightWriter.new
+    plaintext_message = " 1234567890!',-.?abcdefghijklmnopqrstuvwxyzABCDEFGHI2345JKLMNOP3456QRSTUVWX1YZ"
+    assert_equal " #1234567890!',-.?abcdefghijklmnopqrstuvwxyzABCDEFGHI#2345JKLMNOP#3456QRSTUVWX#1YZ" , nightwriter1.parse_plaintext_for_numbers(plaintext_message)
+  end
+
 end

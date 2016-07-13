@@ -3,6 +3,7 @@ class NightReader
 
   def initialize(input_string)
     @braille_string = input_string
+    @braille_letters = []
   end
 
   def string_to_array
@@ -21,5 +22,22 @@ class NightReader
       end
     end
     braille_lines
+  end
+
+  def braille_line_to_letters(braille_line)
+    braille_line.chars.each_with_index do |character, index|
+      if @braille_letters[index / 2].nil?
+        @braille_letters[index / 2] = ""
+      end
+      @braille_letters[index / 2] << character
+    end
+    @braille_letters
+  end
+
+  def braille_multi_line_to_letters
+    compress_lines.each do |line|
+      braille_line_to_letters(line)
+    end
+    @braille_letters
   end
 end

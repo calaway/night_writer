@@ -11,7 +11,7 @@ class NightReader
     @braille_string.split("\n")
   end
 
-  def compress_lines
+  def compress_lines_to_80_characters
     braille_lines = ["", "", ""]
     split_braille_message_to_lines.each_with_index do |row, index|
       braille_lines[index % 3] << row
@@ -30,7 +30,7 @@ class NightReader
   end
 
   def braille_multi_line_to_letters
-    compress_lines.each do |line|
+    compress_lines_to_80_characters.each do |line|
       braille_line_to_letters(line)
     end
     @braille_letters

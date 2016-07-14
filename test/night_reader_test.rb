@@ -14,7 +14,7 @@ class NightReaderTest < Minitest::Test
     message = "00.0.0.0.0\n.00.00.0.0\n.00.0..000"
     braille_message_1 = NightReader.new(message)
 
-    assert_equal ["00.0.0.0.0", ".00.00.0.0", ".00.0..000"], braille_message_1.string_to_array
+    assert_equal ["00.0.0.0.0", ".00.00.0.0", ".00.0..000"], braille_message_1.split_braille_message_to_lines
   end
 
   def test_it_can_compress_messages_split_over_multiple_lines

@@ -29,9 +29,9 @@ class NightWriter
     end.join
   end
 
-  def three_row_translation(input)
+  def three_row_translation(plaintext)
     @rows.map do |index|
-    braille_string(input, index)
+    braille_string(plaintext, index)
     end
   end
 
